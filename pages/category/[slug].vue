@@ -1,11 +1,12 @@
 <template>
     <section class="page-top container">
         <div class="h1-container">
-            <h1 class="h1">{{ thisCategory.name }}</h1>
+            <h1 v-if="thisCategory.name" class="h1">{{ thisCategory.name }}</h1>
+            <h1 v-else class="h1 skeleton skeleton-h1"></h1>
             <span class="products-count">24</span>
         </div>
         <div class="breadcrumbs-container">
-            <template v-for="breadcrumb in breadCrumbs">
+            <template v-if="breadCrumbs.length > 0" v-for="breadcrumb in breadCrumbs">
                 <p class="breadcrumb-item" v-if="breadcrumb.url">
                     <NuxtLink :to="breadcrumb.url">{{ breadcrumb.name }}</NuxtLink>
                 </p>
@@ -13,15 +14,19 @@
                     {{ breadcrumb.name }}
                 </p>
             </template>
+            <p v-else class="skeleton-breadcrumb skeleton"></p>
         </div>
         <div class="category-children">
-            <template v-for="child in childrenCategory">
+            <template v-if="childrenCategory" v-for="child in childrenCategory">
                 <NuxtLink :to="child.slug" class="children-item">
                     <NuxtImg class="child-img" :src="'http://localhost:1337' + child.image.url" />
                     <span class="child-name">{{ child.name }}</span>
                 </NuxtLink>
             </template>
         </div>
+    </section>
+    <section class="main-catalog container">
+        <AsideCatalog />
     </section>
 </template>
 
@@ -62,16 +67,7 @@ const slug: Ref<string | undefined> = ref(route.params.slug as string);
 
 const thisCategory: Ref<Partial<Category>> = ref({});
 const childrenCategory: Ref<Child[]> = ref([]);
-const breadCrumbs: Ref<Breadcrumb[]> = ref([
-    {
-        name: 'Главная',
-        url: '/'
-    },
-    {
-        name: 'Каталог',
-        url: '/catalog'
-    }
-]);
+const breadCrumbs: Ref<Breadcrumb[]> = ref([]);
 
 // Функция для получения категории по slug
 const fetchCategoryBySlug = async (slug: string): Promise<Category | null> => {
@@ -160,7 +156,6 @@ const buildBreadCrumbs = async (category: Category | null) => {
 onMounted(async () => {
     await fetchCategory();
     breadCrumbs.value[breadCrumbs.value.length - 1].url = null
-    console.log(breadCrumbs.value);
 });
 
 // Следим за изменениями slug и обновляем данные при изменении маршрута
@@ -175,7 +170,7 @@ watch(
 
 <style scoped>
 .page-top {
-    padding: 50px 0;
+    padding: 50px 20px;
 
     .h1-container {
         display: flex;
@@ -194,7 +189,6 @@ watch(
             color: #999;
         }
     }
-
     .breadcrumbs-container {
         display: flex;
         gap: 5px;
@@ -248,5 +242,9 @@ watch(
             }
         }
     }
+}
+.main-catalog{
+    display: flex;
+    width: 100%;
 }
 </style>

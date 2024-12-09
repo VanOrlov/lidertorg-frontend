@@ -89,4 +89,29 @@ h6 {
   font-weight: 400;
 }
 /* Обунлящий список */
+
+.skeleton {
+  display: inline-block;
+  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 4px;
+}
+.skeleton-h1{
+    width: 200px;
+    height: 48px;
+}
+.skeleton-breadcrumb{
+    width: 150px;
+    height: 14px;
+}
+
+@keyframes skeleton-loading {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
 </style>
