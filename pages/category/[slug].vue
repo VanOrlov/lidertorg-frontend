@@ -27,6 +27,7 @@
     </section>
     <section class="main-catalog container">
         <AsideCatalog />
+        <ProductList />
     </section>
 </template>
 
@@ -68,7 +69,6 @@ const slug: Ref<string | undefined> = ref(route.params.slug as string);
 const thisCategory: Ref<Partial<Category>> = ref({});
 const childrenCategory: Ref<Child[]> = ref([]);
 const breadCrumbs: Ref<Breadcrumb[]> = ref([]);
-
 // Функция для получения категории по slug
 const fetchCategoryBySlug = async (slug: string): Promise<Category | null> => {
     try {
@@ -162,6 +162,7 @@ onMounted(async () => {
 watch(
     () => route.params.slug,
     async (newSlug) => {
+        
         slug.value = newSlug as string;
         await fetchCategory();
     }
