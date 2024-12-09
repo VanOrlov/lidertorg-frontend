@@ -4,7 +4,7 @@ import type { AxiosInstance } from 'axios'
 const axiosInstance: AxiosInstance = axios.create({
     baseURL: 'http://localhost:1337/api',
     headers: {
-        Authorization: 'Bearer bb0c1dd496efd189e069c52e6c7eb33440b33265ce880d1245bc7b661701cbfc0a3f0e2489770b53677fa0cd16c88ef75f4af487632939ab8e34c349077494cdfe01def82cee298e01521d5e61c19984e4a1934bcfb96470dedf99112be5f038d155d030dc55284997ad80537c4795755a12724eb215f7effbfcd195f16f9b0d',
+        Authorization: 'Bearer 54f59b99f6ff99d1dc5e9038df994d76fc447101a2b62ab021550215ae63ad0d99690214ad0f7bf2f12ad560bc7d28ee6f17c045fbd1bcc19f3f86d495e952ebd2686c718c220d4b62d5eab00e196956a21b0e286e0c6a5a8a19de6aa7bfcb3d8b44e665bcaa82e2593d2e15880e3139899d0dc848ff55d3c2d30bf230454a35',
     }
 })
 

@@ -27,7 +27,7 @@
     </section>
     <section class="main-catalog container">
         <AsideCatalog />
-        <ProductList />
+        <ProductList :id="thisCategory.id" />
     </section>
 </template>
 
