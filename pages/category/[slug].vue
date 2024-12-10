@@ -3,7 +3,7 @@
         <div class="h1-container">
             <h1 v-if="thisCategory.name" class="h1">{{ thisCategory.name }}</h1>
             <h1 v-else class="h1 skeleton skeleton-h1"></h1>
-            <span class="products-count">24</span>
+            <span v-if="productCount !== 0" class="products-count">{{ productCount }}</span>
         </div>
         <div class="breadcrumbs-container">
             <template v-if="breadCrumbs.length > 0" v-for="breadcrumb in breadCrumbs">
@@ -27,7 +27,7 @@
     </section>
     <section class="main-catalog container">
         <AsideCatalog />
-        <ProductList :id="thisCategory.id" />
+        <ProductList @updateCount="updateProductCount" :id="thisCategory.id" />
     </section>
 </template>
 
@@ -150,12 +150,18 @@ const buildBreadCrumbs = async (category: Category | null) => {
     }
 };
 
-
+const productCount = ref(0);
+const updateProductCount = (count: number) => {
+  productCount.value = count; 
+};
 
 // Загружаем данные при монтировании компонента
 onMounted(async () => {
     await fetchCategory();
     breadCrumbs.value[breadCrumbs.value.length - 1].url = null
+    useHead({
+        title: `${thisCategory.value.name} купить в Ярославле | "Лидерторг"`,
+    })
 });
 
 // Следим за изменениями slug и обновляем данные при изменении маршрута

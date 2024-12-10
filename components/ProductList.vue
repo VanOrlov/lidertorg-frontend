@@ -4,9 +4,14 @@
 
 <template>
     <div class="product-list">
-        <template v-for="product in tovar">
-            <ProductItem :product="product"/>
+        <template v-if="tovar.length > 0">
+            <template v-for="product in tovar">
+                <ProductItem :product="product"/>
+            </template>
         </template>
+        <div v-else>
+            Товаров не найдено
+        </div>
     </div>
 </template>
 
@@ -28,10 +33,7 @@ const tovar = ref<any[]>([]);
 
 const fetchProductsRecursive = async (categoryId: number) => {
     try {
-        // Массив для хранения всех товаров
         let allProducts: any[] = [];
-
-        // Получаем категорию с товарами и дочерними категориями
         const response = await axios.get('/kategoriyas', {
             params: {
                 'filters[id][$eq]': categoryId,
@@ -75,15 +77,21 @@ watch(
         }
     }
 );
+
+const emit = defineEmits(['updateCount']);
+watch(
+  () => tovar.value.length,
+  (newCount) => {
+    emit('updateCount', newCount); // Передаем новое количество товаров родителю
+  }
+);
 </script>
 
 <style scoped>
 .product-list{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 20px;
     width: 80%;
-    height: 100px;
-    background: red;
 }
 </style>
