@@ -18,12 +18,9 @@
 import type { Product, CartItem } from '@/types/types'
 import { store } from '@/stores/store';
 const cartStore = store();
-const props = defineProps({
-    product:{
-        type: Object,
-        required: true,
-    }
-})
+defineProps<{
+    product: Product
+}>()
 
 const formatPrice = (price: number): string => {
   return new Intl.NumberFormat('ru-RU').format(price);
@@ -38,7 +35,6 @@ const addToCart = (product: Product) => {
         quantity: 1
     }
     cartStore.addToCart(obj)
-    console.log(computed(() => cartStore.totalCart).value);
 }
 
 </script>

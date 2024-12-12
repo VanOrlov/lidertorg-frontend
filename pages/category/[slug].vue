@@ -1,66 +1,51 @@
 <template>
-    <section class="page-top container">
-        <div class="h1-container">
-            <h1 v-if="thisCategory.name" class="h1">{{ thisCategory.name }}</h1>
-            <h1 v-else class="h1 skeleton skeleton-h1"></h1>
-            <span v-if="productCount !== 0" class="products-count">{{ productCount }}</span>
-        </div>
-        <div class="breadcrumbs-container">
-            <template v-if="breadCrumbs.length > 0" v-for="breadcrumb in breadCrumbs">
-                <p class="breadcrumb-item" v-if="breadcrumb.url">
-                    <NuxtLink :to="breadcrumb.url">{{ breadcrumb.name }}</NuxtLink>
-                </p>
-                <p class="breadcrumb-item" v-else>
-                    {{ breadcrumb.name }}
-                </p>
-            </template>
-            <p v-else class="skeleton-breadcrumb skeleton"></p>
-        </div>
-        <div class="category-children">
-            <template v-if="childrenCategory" v-for="child in childrenCategory">
-                <NuxtLink :to="child.slug" class="children-item">
-                    <NuxtImg class="child-img" :src="'http://localhost:1337' + child.image.url" />
-                    <span class="child-name">{{ child.name }}</span>
-                </NuxtLink>
-            </template>
-        </div>
-    </section>
-    <section class="main-catalog container">
-        <AsideCatalog />
-        <ProductList @updateCount="updateProductCount" :id="thisCategory.id" />
-    </section>
+    <div class="">
+        <section class="page-top container">
+            <div class="h1-container">
+                <h1 v-if="thisCategory.name" class="h1">{{ thisCategory.name }}</h1>
+                <h1 v-else class="h1 skeleton skeleton-h1" />
+                <span v-if="productCount !== 0" class="products-count">{{ productCount }}</span>
+            </div>
+            <div class="breadcrumbs-container">
+                <template v-if="breadCrumbs.length > 0">
+                    <template v-for="breadcrumb in breadCrumbs" :key="breadcrumb.name">
+                        <p v-if="breadcrumb.url" class="breadcrumb-item">
+                            <NuxtLink :to="breadcrumb.url">{{ breadcrumb.name }}</NuxtLink>
+                        </p>
+                        <p v-else class="breadcrumb-item">
+                            {{ breadcrumb.name }}
+                        </p>
+                    </template>
+                </template>
+                <p v-else class="skeleton-breadcrumb skeleton" />
+            </div>
+            <div class="category-children">
+                <template v-if="childrenCategory">
+                    <template v-for="child in childrenCategory" :key="child.id">
+                        <NuxtLink :to="child.slug" class="children-item">
+                            <NuxtImg class="child-img" :src="'http://localhost:1337' + child.image.url" />
+                            <span class="child-name">{{ child.name }}</span>
+                        </NuxtLink>
+                    </template>
+                </template>
+            </div>
+        </section>
+        <section class="main-catalog container">
+            <AsideCatalog />
+            <ProductList :id="thisCategory.id" @update-count="updateProductCount" />
+        </section>
+    </div>
 </template>
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { ref, onMounted, watch } from 'vue';
-import type { Ref } from 'vue';
 
 import axios from '@/utils/axios';
 
-// Типизация для категорий и хлебных крошек
-type Category = {
-    id: number;
-    name: string;
-    slug: string;
-    parent?: {
-        id: number;
-        name: string;
-        slug: string;
-    };
-};
+import type { Ref } from 'vue';
+import type { Category, Child, Breadcrumb } from '@/types/types'
 
-type Child = {
-    id: number;
-    name: string;
-    image: { url: string };
-    slug: string;
-};
-
-type Breadcrumb = {
-    name: string;
-    url: string | null;
-};
 
 // Параметры маршрута и реактивные переменные
 const route = useRoute();

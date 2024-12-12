@@ -1,30 +1,29 @@
 <template>
     <aside class="catalog-sidebar">
         <div class="sidebar-categories-container">
-            <div class="parent-container" v-if="categories.length !== 0" v-for="category in categories"
-                :id="String(category.id)" @mouseover="showMenu(category.id)" @mouseleave="hideMenu">
-                <NuxtLink :to="'/category/' + category.slug" class="parent-category">
-                    <span>{{ category.name }}</span>
-                    <span v-if="category.childrens.length !== 0" class="aside-item-arrow">></span>
-                </NuxtLink>
-                <div v-if="category.childrens.length !== 0" class="category-child-right-dropdown"
-                    :id="String(category.id)" :class="{ visible: activeMenu === category.id }">
-                    <NuxtLink :to="'/category/' + child.slug" v-for="child in category.childrens"
-                        class="category-child-item">
-                        <NuxtImg :src="'http://localhost:1337/' + child.image?.url" />
-                        <span class="name">{{ child.name }}</span>
+            <template v-if="categories.length !== 0">
+                <div v-for="category in categories" :id="String(category.id)" :key="category.id" class="parent-container" @mouseover="showMenu(category.id)" @mouseleave="hideMenu">
+                    <NuxtLink :to="'/category/' + category.slug" class="parent-category">
+                        <span>{{ category.name }}</span>
+                        <span v-if="category.childrens.length !== 0" class="aside-item-arrow">></span>
                     </NuxtLink>
+                    <div v-if="category.childrens.length !== 0" :id="String(category.id)" class="category-child-right-dropdown" :class="{ visible: activeMenu === category.id }">
+                        <NuxtLink v-for="child in category.childrens" :key="child.id" :to="'/category/' + child.slug" class="category-child-item">
+                            <NuxtImg :src="'http://localhost:1337/' + child.image?.url" />
+                            <span class="name">{{ child.name }}</span>
+                        </NuxtLink>
+                    </div>
                 </div>
-            </div>
+            </template>
             <div v-else class="parent-container">
-                <span class="skeleton-breadcrumb skeleton"></span>
+                <span class="skeleton-breadcrumb skeleton" />
             </div>
         </div>
     </aside>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref } from 'vue';
 import type { Ref } from 'vue';
 
 import axios from '@/utils/axios';

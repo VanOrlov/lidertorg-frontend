@@ -3,7 +3,24 @@
     <NuxtPage />
   </NuxtLayout>
 </template>
+<script setup lang="ts">
+import { onMounted } from 'vue';
+import { store } from '@/stores/store';
 
+const cartStore = store();
+
+// Загрузка корзины при запуске приложения
+onMounted(() => {
+  cartStore.loadFromCookie(); // Загружаем данные корзины из cookie
+
+  // Сохраняем корзину в cookie при каждом изменении
+  cartStore.$subscribe((mutation, state) => {
+    cartStore.saveToCookie();
+    console.log(state);
+    
+  });
+});
+</script>
 <style>
 /* Обунлящий список */
 * {

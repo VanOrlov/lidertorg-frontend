@@ -1,11 +1,7 @@
-//TODO: Вынести функцию в отдельный файл + добавить типизарование товара
-
-
-
 <template>
     <div class="product-list">
         <template v-if="tovar.length > 0">
-            <template v-for="product in tovar">
+            <template v-for="product in tovar" :key="product.id">
                 <ProductItem :product="product"/>
             </template>
         </template>
@@ -16,10 +12,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch } from 'vue';
 
 import axios from '@/utils/axios';
 
+import type { Product } from "@/types/types" 
 
 const props = defineProps({
     id: {
@@ -29,11 +26,11 @@ const props = defineProps({
     },
 });
 
-const tovar = ref<any[]>([]);
+const tovar = ref<Product[]>([]);
 
-const fetchProductsRecursive = async (categoryId: number) => {
+const fetchProductsRecursive = async (categoryId: number): Promise<Product[]> => {
     try {
-        let allProducts: any[] = [];
+        const allProducts: Product[] = [];
         const response = await axios.get('/kategoriyas', {
             params: {
                 'filters[id][$eq]': categoryId,
@@ -63,7 +60,7 @@ const fetchProductsRecursive = async (categoryId: number) => {
         tovar.value = allProducts;
         return allProducts; 
     } catch (error) {
-        console.error('Ошибка при загрузке данных:', error);
+        throw new Error()
         return [];
     }
 };

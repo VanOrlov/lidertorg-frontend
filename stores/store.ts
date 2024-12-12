@@ -1,5 +1,5 @@
 import type { CartItem } from '@/types/types'
-
+import Cookies from 'js-cookie';
 import { defineStore } from 'pinia';
 
 export const store = defineStore('store', {
@@ -35,7 +35,7 @@ export const store = defineStore('store', {
           item.quantity++;
         }
       },
-      decrementProduct(id: number): void { //Уменьшение кол-в товара 
+      decrementProduct(id: number): void { //Уменьшение кол-ва товара 
         const item = this.cart.find((product) => product.id === id);
         if (item?.quantity == 1) {
           this.cart = this.cart.filter(item => item.id !== id); //Если кол-во товара равно 1, и он уменьшается, то удаляем его из корзины
@@ -49,6 +49,18 @@ export const store = defineStore('store', {
       },
       clearCart(): void { // Очистить корзину
         this.cart = [];
+      },
+      // Сохранение состояния корзины в cookie
+      saveToCookie(): void {
+        Cookies.set('cart', JSON.stringify(this.cart), { expires: 7 }); // Cookie действует 7 дней
+      },
+
+      // Загрузка состояния корзины из cookie
+      loadFromCookie(): void {
+        const cartCookie = Cookies.get('cart');
+        if (cartCookie) {
+          this.cart = JSON.parse(cartCookie);
+        }
       },
     },
   });
