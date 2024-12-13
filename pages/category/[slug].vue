@@ -46,14 +46,13 @@ import axios from '@/utils/axios';
 import type { Ref } from 'vue';
 import type { Category, Child, Breadcrumb } from '@/types/types'
 
-
 // Параметры маршрута и реактивные переменные
 const route = useRoute();
 const slug: Ref<string | undefined> = ref(route.params.slug as string);
-
 const thisCategory: Ref<Partial<Category>> = ref({});
 const childrenCategory: Ref<Child[]> = ref([]);
 const breadCrumbs: Ref<Breadcrumb[]> = ref([]);
+
 // Функция для получения категории по slug
 const fetchCategoryBySlug = async (slug: string): Promise<Category | null> => {
     try {
