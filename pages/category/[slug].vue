@@ -2,7 +2,7 @@
     <div class="">
         <section class="page-top container">
             <div class="h1-container">
-                <h1 v-if="thisCategory.name" class="h1">{{ thisCategory.name }}</h1>
+                <h1 v-if="thisCategory?.name" class="h1">{{ thisCategory?.name }}</h1>
                 <h1 v-else class="h1 skeleton skeleton-h1" />
                 <span v-if="productCount !== 0" class="products-count">{{ productCount }}</span>
             </div>
@@ -32,7 +32,8 @@
         </section>
         <section class="main-catalog container">
             <AsideCatalog />
-            <ProductList :id="thisCategory.id" @update-count="updateProductCount" />
+            <ProductList :id="thisCategory?.id" @update-count="updateProductCount" />
+            
         </section>
     </div>
 </template>
@@ -49,7 +50,7 @@ import type { Category, Child, Breadcrumb } from '@/types/types'
 // Параметры маршрута и реактивные переменные
 const route = useRoute();
 const slug: Ref<string | undefined> = ref(route.params.slug as string);
-const thisCategory: Ref<Partial<Category>> = ref({});
+const thisCategory: Ref<Category | null> = ref(null);
 const childrenCategory: Ref<Child[]> = ref([]);
 const breadCrumbs: Ref<Breadcrumb[]> = ref([]);
 
@@ -75,8 +76,9 @@ const fetchCategoryBySlug = async (slug: string): Promise<Category | null> => {
     }
 };
 
+
 // Функция для получения текущей категории и формирования хлебных крошек
-const fetchCategory = async () => {
+const fetchCategory = async (): Promise<void> => {
     try {
         const response = await axios.get('/kategoriyas', {
             params: {
@@ -144,7 +146,7 @@ onMounted(async () => {
     await fetchCategory();
     breadCrumbs.value[breadCrumbs.value.length - 1].url = null
     useHead({
-        title: `${thisCategory.value.name} купить в Ярославле | "Лидерторг"`,
+        title: `${thisCategory.value?.name} купить в Ярославле | "Лидерторг"`,
     })
 });
 

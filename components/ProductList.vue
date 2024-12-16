@@ -60,7 +60,6 @@ const fetchProductsRecursive = async (categoryId: number): Promise<Product[]> =>
         tovar.value = allProducts;
         return allProducts; 
     } catch (error) {
-        throw new Error()
         return [];
     }
 };
