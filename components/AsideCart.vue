@@ -38,7 +38,7 @@
                     <span class="clear-cart" @click="clearCart">
                         Очистить
                     </span>
-                    <span class="total-price">Итого: {{ cartTotalPrice }}</span>
+                    <span class="total-price">Итого: {{ formatPrice(cartTotalPrice) }} ₽</span>
                 </div>
                 <div class="bottom-button-container">
                     <NuxtLink to="/cart/" @click="openCart">
@@ -64,7 +64,9 @@ const openCart = () => {
     document.querySelector('.aside-cart-container')?.classList.toggle('open')
 }
 
-
+const formatPrice = (price: number): string => {
+  return new Intl.NumberFormat('ru-RU').format(price);
+};
 onMounted(() => {
   const body = document.body;
   const menu = document.querySelector('.aside-cart-container');

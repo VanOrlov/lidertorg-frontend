@@ -5,9 +5,9 @@
             Загрузка
           </div>
           <div v-else class="category-items-container">
-            <div v-for="category in categoryList" class="category-item">
+            <div v-for="category in categoryList" :key="category.id" class="category-item">
               <NuxtLink class="category-link" :to="'/category/' + category.slug">
-                <img v-bind:src="'http://localhost:1337' + category.image.url" alt="">
+                <img :src="'http://localhost:1337' + category.image.url" alt="">
                 <span class="category-name">{{ category.name }}</span>
               </NuxtLink>
             </div>
@@ -31,6 +31,7 @@ type description = {
 }
 
 type Category = {
+    id: number,
     name: string,
     description?: description[],
     image: {url: string},
@@ -39,8 +40,8 @@ type Category = {
 /* --- */
 
 /* Переменные */
-let categoryList: Ref<Category[]> = ref([])
-let loadingCategory: Ref<Boolean> = ref(true)
+const categoryList: Ref<Category[]> = ref([])
+const loadingCategory: Ref<boolean> = ref(true)
 /* --- */
 
 /* Функции */

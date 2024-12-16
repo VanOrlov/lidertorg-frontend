@@ -16,12 +16,12 @@ onMounted(() => {
   // Сохраняем корзину в cookie при каждом изменении
   cartStore.$subscribe((mutation, state) => {
     cartStore.saveToCookie();
-    console.log(state);
     
   });
 });
 </script>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 /* Обунлящий список */
 * {
   padding: 0;
@@ -62,7 +62,7 @@ body {
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
-  font-family: Manrope, sans-serif;
+  font-family: Montserrat, Arial, sans-serif;
 }
 
 input,

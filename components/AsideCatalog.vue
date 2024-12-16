@@ -101,6 +101,7 @@ asideCategories()
 
             .category-child-right-dropdown {
                 display: grid;
+                width: fit-content;
                 grid-template-columns: repeat(3, 1fr);
                 grid-column-gap: 50px;
                 position: absolute;
@@ -116,14 +117,14 @@ asideCategories()
 
                 .category-child-item {
                     display: flex;
-
+                    width: max-content;
+                    gap: 20px;
                     img {
                         max-height: 60px;
                         border-radius: 5px;
                     }
 
                     span {
-                        margin-left: 20px;
                         font-weight: 600;
                         transition: all .2s ease;
                     }
