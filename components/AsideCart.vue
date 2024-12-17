@@ -7,25 +7,25 @@
             </div>
         </div>
         <div class="cart-main-block">
-            <template v-if="cart.length > 0">
-                <transition-group name="fade" tag="div">
-                    <AsideCartItem v-for="product in cart" :key="product.id" :product="product"/>
-                </transition-group>
-            </template>
-            <template v-else>
-                <div class="zero-cart-container">
-                    <h3 class="h3">Корзина пуста</h3>
-                    <NuxtLink to="/catalog/">
-                        <UButton 
-                        icon="carbon:catalog-publish"
-                        size="xl"
-                        @click="openCart"
-                        >
-                            Каталог
-                        </UButton>
-                    </NuxtLink>
-                </div>
-            </template>
+            <transition-group name="fade" tag="div">
+                <template v-if="cart.length > 0">
+                        <AsideCartItem v-for="product in cart" :key="product.id" :product="product"/>
+                </template>
+                <template v-else>
+                    <div class="zero-cart-container">
+                        <h3 class="h3">Корзина пуста</h3>
+                        <NuxtLink to="/catalog/">
+                            <UButton 
+                            icon="carbon:catalog-publish"
+                            size="xl"
+                            @click="openCart"
+                            >
+                                Каталог
+                            </UButton>
+                        </NuxtLink>
+                    </div>
+                </template>
+            </transition-group>
         </div>
         <div class="cart-opener" @click="openCart">
             <UChip :text="cartTotalItems" color="teal" size="xl" :show="cartTotalItems > 0">
@@ -93,7 +93,7 @@ onMounted(() => {
     height: 100%;
     width: 760px;
     box-shadow: 0 0 10px 1px #0001;
-    background: white;
+    background: #fff;
     transform: translateX(100%);
     transition: all .2s ease;
     .cart-top-block{
@@ -132,6 +132,7 @@ onMounted(() => {
             flex-direction: column;
             align-items: center;
             gap: 20px;
+            margin-top: 150px;
             h3{
                 font-size: 24px;
                 font-weight: 600;
@@ -214,18 +215,18 @@ onMounted(() => {
             }
             .cart:hover{
                 background: teal;
-                color: white;
+                color: #fff;
                 cursor: pointer;
             }
             .fast{
                 background: teal;
-                color: white;
+                color: #fff;
                 border: 1px solid transparent;
             }
             .fast:hover{
                 color: black;
                 border: 1px solid teal;
-                background-color: white;
+                background-color: #fff;
                 cursor: pointer;
             }
         }
@@ -243,7 +244,7 @@ onMounted(() => {
     width: 60px;
     height: 60px;
     padding: 15px;
-    background-color: white;
+    background-color: #fff;
     border: 1px solid #ececec;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -262,7 +263,6 @@ onMounted(() => {
 }
 .fade-enter-from,
 .fade-leave-to {
-  transform: translateX(100%);
   opacity: 0;
 }
 

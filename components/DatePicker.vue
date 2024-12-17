@@ -1,6 +1,5 @@
 <template>
-  <VCalendarDatePicker v-if="date && (date as DatePickerRangeObject)?.start && (date as DatePickerRangeObject)?.end"
-    v-model.range="date" :columns="2" v-bind="{ ...attrs, ...$attrs }" @dayclick="onDayClick" />
+  <VCalendarDatePicker v-if="date && (date as DatePickerRangeObject)?.start && (date as DatePickerRangeObject)?.end" v-model.range="date" :columns="2" v-bind="{ ...attrs, ...$attrs }" @dayclick="onDayClick" />
   <VCalendarDatePicker v-else v-model="date" v-bind="{ ...attrs, ...$attrs }" @dayclick="onDayClick" />
 </template>
 
@@ -38,7 +37,7 @@ const attrs = {
   'first-day-of-week': 2
 }
 
-function onDayClick(_: any, event: MouseEvent): void {
+function onDayClick(_: unknown, event: MouseEvent): void {
   const target = event.target as HTMLElement
   target.blur()
 }

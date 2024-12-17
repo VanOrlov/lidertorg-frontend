@@ -8,7 +8,4 @@ export default defineNuxtConfig({
     '@nuxt/eslint', 
     '@nuxt/ui'
   ],
-  colorMode: {
-    preference: 'light'
-  }
 })
