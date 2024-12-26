@@ -16,20 +16,59 @@
                         <div class="date-container">
                             <span>Дата:</span>
                             <UPopover :popper="{ placement: 'bottom-start' }">
-                                <UButton color="teal" icon="i-heroicons-calendar-days-20-solid" :label="format(date, 'd MMM, yyy')" />
+                                <UButton color="teal" icon="i-heroicons-calendar-days-20-solid" :label="format(fast_order.date, 'd MMM, yyy')" />
                                 <template #panel="{ close }">
-                                    <DatePicker v-model="date" is-required @close="close" />
+                                    <DatePicker v-model="fast_order.date" is-required @close="close" />
                                 </template>
                             </UPopover>
                         </div>
                         <div class="address-container">
                             <span>Адрес:</span>
-                            <UInput :value="address" color="teal" placeholder="г. Ярославль, ул. Заволжская, д.2" />
+                            <UInput :value="fast_order.address" color="teal" placeholder="г. Ярославль, ул. Заволжская, д.2" />
                         </div>
                         <UButton 
                             icon="carbon:catalog-publish"
                             size="xl"
                             color="teal"
+                            @click="sendOrder(fast_order)"
+                            >
+                            Заказ
+                        </UButton>
+                    </div>
+                </div>
+                <div class="fast-cart-order">
+                    <h3 class="h3">Заказ</h3>
+                    <div class="fast-item">
+                        <div class="date-container">
+                            <span>Дата:</span>
+                            <UPopover :popper="{ placement: 'bottom-start' }">
+                                <UButton color="teal" icon="i-heroicons-calendar-days-20-solid" :label="format(default_order.date, 'd MMM, yyy')" />
+                                <template #panel="{ close }">
+                                    <DatePicker v-model="default_order.date" is-required @close="close" />
+                                </template>
+                            </UPopover>
+                        </div>
+                        <div class="address-container">
+                            <span>Адрес:</span>
+                            <UInput :value="default_order.address" color="teal" placeholder="г. Ярославль, ул. Заволжская, д.2" />
+                        </div>
+                        <div class="address-container">
+                            <span>Имя:</span>
+                            <UInput :value="default_order.name" color="teal" placeholder="Сергей" />
+                        </div>
+                        <div class="address-container">
+                            <span>Телефон:</span>
+                            <UInput :value="default_order.phone" color="teal" placeholder="89095526596" />
+                        </div>
+                        <div class="address-container">
+                            <span>Почта:</span>
+                            <UInput :value="default_order.mail" color="teal" placeholder="example@gmail.com" />
+                        </div>
+                        <UButton 
+                            icon="carbon:catalog-publish"
+                            size="xl"
+                            color="teal"
+                            @click="sendOrder(default_order)"
                             >
                             Заказ
                         </UButton>
@@ -44,13 +83,34 @@
 import { format } from 'date-fns'
 import { store } from "@/stores/store";
 
-const date = ref(new Date())
-const address = ref(null)
 const cartStore = store();
 const cart = computed(() => cartStore.totalCart);
+
+const fast_order = ref({ //Сделать доступным только зарегестрированным пользователям
+    address: '',
+    date: Date.now(),
+    type: 'fast_order',
+    items: cart,
+})
+
+const default_order = ref({
+    address: '',
+    date: Date.now(),
+    name: '',
+    phone: 0,
+    mail: '',
+    type: 'default_order'
+})
+
 useHead({
     title: 'Корзина | "ЛидерТорг"',
 });
+
+
+function sendOrder (obj: unknown) {
+    console.log(obj);
+    
+}
 </script>
 
 <style scoped>
@@ -66,7 +126,6 @@ useHead({
 .cart-main-block {
     display: flex;
     gap: 20px;
-    overflow: hidden;
     .cart-items-container {
         width: 75%;
         height: 500px;
@@ -121,6 +180,5 @@ useHead({
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-  transform: translateX(100%)
 }
 </style>

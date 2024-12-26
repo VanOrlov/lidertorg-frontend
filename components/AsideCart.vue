@@ -90,6 +90,7 @@ onMounted(() => {
     position: fixed;
     top: 0;
     right: 0;
+    z-index: 4;
     height: 100%;
     width: 760px;
     box-shadow: 0 0 10px 1px #0001;
