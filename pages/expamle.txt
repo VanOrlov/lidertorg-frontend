@@ -1,0 +1,25 @@
+{
+    "data":{
+    "orderStatus": "Новый",
+    "totalPrice": 129900.00,
+    "currency": "RUB",
+    "paymentMethod": "Карта",
+    "paymentStatus": "Не оплачен",
+    "deliveryMethod": "Курьер",
+    "deliveryPrice": 0,
+    "comment": "",
+    "customerName": "Иван",
+    "customerPhone": "+79095526596",
+    "customerEmail": "mr.ivan.orlov1996@mail.ru",
+    "customerAddress": "Заволжская 2",
+    "customerComment": "Срочно привезите тяжелые наркотики",
+    "products": [
+        {
+            "productId": "1",
+            "productName": "IPhone 14 Pro 128 GB",
+            "productPrice": 129900,
+            "quantity": 5
+        }
+    ]
+}
+}

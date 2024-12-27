@@ -1,6 +1,7 @@
-import type { CartItem } from '@/types/types'
+import type { CartItem, Message } from '@/types/types'
 import Cookies from 'js-cookie';
 import { defineStore } from 'pinia';
+import { useMessageStore } from './modules/message';
 
 export const store = defineStore('store', {
     state: () => ({
@@ -62,5 +63,19 @@ export const store = defineStore('store', {
           this.cart = JSON.parse(cartCookie);
         }
       },
+
+      //-------------------Модуль useMessageStore----------------
+      messageModule(){
+        return useMessageStore()
+      },
+
+      showMessage(type: Message['type'], content: Message['content'], duration?: number){
+        const messageStore = this.messageModule()
+        messageStore.addMessage(type, content, duration)
+      },
+      deleteMessage(id: number){
+        const messageStore = this.messageModule()
+        messageStore.removeMessage(id)
+      }
     },
   });

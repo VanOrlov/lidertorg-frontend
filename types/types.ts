@@ -37,3 +37,10 @@ export type Breadcrumb = {
     name: string;
     url: string | null;
 };
+
+export type Message = {
+    id: number,
+    type: 'success' | 'error' | 'warning' | 'info',
+    content: string,
+    duration?: number
+}

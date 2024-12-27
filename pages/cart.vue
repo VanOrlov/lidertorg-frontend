@@ -109,7 +109,7 @@ useHead({
 
 function sendOrder (obj: unknown) {
     console.log(obj);
-    
+    cartStore.showMessage('error', 'Ошибка заказа, попробуйте позже', 2000)
 }
 </script>
 
