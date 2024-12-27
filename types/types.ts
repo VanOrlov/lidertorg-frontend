@@ -1,3 +1,5 @@
+import type { orderStatus, currency, paymentMethod, paymentStatus, deliveryMethod } from "@/enums/Order"
+
 export type CartItem = { //Для хранения товаров в корзине, реализованную через pinia
     id: number;
     name: string;
@@ -32,15 +34,39 @@ export type Child = {
     image: { url: string };
     slug: string;
 };
+
 //Типизация хлебных крошек
 export type Breadcrumb = {
     name: string;
     url: string | null;
 };
 
+//Типизация useMessage
 export type Message = {
     id: number,
     type: 'success' | 'error' | 'warning' | 'info',
     content: string,
     duration?: number
+}
+
+//Типизация заказа
+export type Order = {
+    orderStatus: `${orderStatus}`,
+    totalPrice: number,
+    currency: `${currency}`,
+    paymentMethod: `${paymentMethod}`,
+    paymentStatus: `${paymentStatus}`,
+    deliveryMethod: `${deliveryMethod}`,
+    comment: string,
+    customerName: string, 
+    customerPhone: string,
+    customerEmail: string,
+    customerAddress: string,
+    customerComment: string,
+    products: {
+        productId: string,
+        productName: string,
+        productPrice: number,
+        quantity: number
+    }[]
 }
